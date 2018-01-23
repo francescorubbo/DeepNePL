@@ -22,3 +22,29 @@ def shallowCNN():
     accuracy = np.mean(test_y  == predicted_labels)
     print( 'Accuracy is', accuracy )
     return accuracy
+
+
+def retrain(num_classes):
+
+    cuda = torch.cuda.is_available()
+
+    model = torch.load('data/models/shallowCNN.pth', map_location=lambda storage, loc: storage)
+    
+    for param in model.parameters():
+        param.requires_grad = False
+
+    num_ftrs = model.conv_classifier.in_channels
+    kernels = model.kernel_size
+    model.conv_classifier = nn.Conv2d(num_ftrs, num_classes,
+                                      kernels, bias=True))
+
+    if cuda:
+        model.cuda()
+        
+    
+    
+    test_y = np.load('data/uploads/train_y.npy')
+    test_X = np.load('data/uploads/train_X.npy')
+
+
+
