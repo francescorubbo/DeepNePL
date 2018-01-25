@@ -1,29 +1,39 @@
 from flask import render_template
 from flask import request
+from werkzeug.utils import secure_filename
 from deepnepl import app, datafiles
-from deepnepl.models import shallowCNN
+from deepnepl.models import shallowCNN, CSPLDA
+import deepnepl.plotting as plotting
 
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired
-from wtforms import SubmitField
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template('index.html')
 
-class UploadForm(FlaskForm):
-    datafile = FileField(u'Test dataset',validators=[FileRequired(u'File was empty!')])
-    submit = SubmitField(u'Upload')
+@app.route('/retraining')
+def retraining():
+    return render_template('index.html')
 
-@app.route('/', methods=['GET', 'POST'])
-def input():
-       form_data = UploadForm()
-       form_label = UploadForm()
-       for form in [form_data,form_label]:
-           if form.validate_on_submit():
-               filename = datafiles.save(form.datafile.data)
-       return render_template("input.html", form_data=form_data, form_label=form_label)
+@app.route('/testing')
+def testing():
+    return render_template('testing.html')
 
+@app.route('/uploader/<mode>/<filename>', methods=['GET', 'POST'])
+def upload_file(mode,filename):
+    if request.method == 'POST':
+        print( request.form )
+        f = request.files['file']
+        f.save('deepnepl/static/data/uploads/'+secure_filename(filename))
+        print('file uploaded successfully')
+    return render_template(mode+".html")
+                                   
 @app.route('/output')
 def output():
-       the_result = shallowCNN()
-       return render_template("output.html", the_result = the_result)
+       output = shallowCNN()
+       print(CSPLDA())
+       the_result = plotting.accuracy(output)
+       plotting.roc(output)
+       return render_template("output_testing.html", the_result = the_result)
 
 @app.route('/retrain')
 def retrain():

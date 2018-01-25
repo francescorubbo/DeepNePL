@@ -61,33 +61,14 @@
 	<p>Upload user input</p>
       </div>
       
-
       <div class = "container">
-	
-	<form method="POST" enctype="multipart/form-data">
-	  <div class="form-group">
-	    <p> Training data </p>
-	    {{ form_data.hidden_tag() }}
-	    {{ form_data.datafile }}
-	    {{ form_data.submit }}
-	  </div>
-	  {% for error in form_data.datafile.errors %}
-	  <span style="color: red;">{{ error }}</span>
-	  {% endfor %}
-	</form>
-	
-	<form method="POST" enctype="multipart/form-data">
-	  <div class="form-group">
-	    <p> Training labels </p>
-	    {{ form_label.hidden_tag() }}
-	    {{ form_label.datafile }}
-	    {{ form_label.submit }}
-	  </div>
-	  {% for error in form_label.datafile.errors %}
-	  <span style="color: red;">{{ error }}</span>
-	  {% endfor %}
-	</form>
 
+	<form action = "http://localhost:5000/uploader" method = "POST"
+	      enctype = "multipart/form-data" id="traindata">
+	  Training data: <input type = "file" name = "file" />
+	  <input type = "submit"/>
+	</form>
+		
       </div>
 
       <form action="/retrain">
@@ -98,32 +79,13 @@
       
       <div class = "container">
 	
-	<form method="POST" enctype="multipart/form-data">
-	  <div class="form-group">
-	    <p> Test data </p>
-	    {{ form_data.hidden_tag() }}
-	    {{ form_data.datafile }}
-	    {{ form_data.submit }}
-	  </div>
-	  {% for error in form_data.datafile.errors %}
-	  <span style="color: red;">{{ error }}</span>
-	  {% endfor %}
+	<form action = "http://localhost:5000/uploader" method = "POST"
+	      enctype = "multipart/form-data">
+	  <input type = "file" name = "file" />
+	  <input type = "submit"/>
 	</form>
-	
-	<form method="POST" enctype="multipart/form-data">
-	  <div class="form-group">
-	    <p> Test labels </p>
-	    {{ form_label.hidden_tag() }}
-	    {{ form_label.datafile }}
-	    {{ form_label.submit }}
-	  </div>
-	  {% for error in form_label.datafile.errors %}
-	  <span style="color: red;">{{ error }}</span>
-	  {% endfor %}
-	</form>
-
       </div>
-
+      
       <form action="/output">
       <div>
 	<button type="submit" class="btn btn-default btn-lg">Evaluate!</button>

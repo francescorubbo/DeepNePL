@@ -1,0 +1,5 @@
+name: deep-learning
+channels:
+  - defaults
+prefix: /home/francesco/anaconda3/envs/deep-learning
+
