@@ -1,7 +1,7 @@
 from flask import render_template
 from flask import request
 from werkzeug.utils import secure_filename
-from deepnepl import app, datafiles
+from deepnepl import app#, datafiles
 from deepnepl.models import shallowCNN, CSPLDA
 import deepnepl.plotting as plotting
 
