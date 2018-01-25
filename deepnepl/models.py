@@ -11,17 +11,17 @@ def shallowCNN():
     cuda = torch.cuda.is_available()
 
     test_X = np.load('deepnepl/static/data/uploads/test_X.npy')
-    net_in = np_to_var(test_X[:,:,:,None])
-    if cuda:
-        net_in = net_in.cuda()
 
     model = torch.load('deepnepl/static/data/models/shallowCNN.pth', map_location=lambda storage, loc: storage)
     if cuda:
         model.cuda()
 
-    outputs = model(net_in)
-    return var_to_np(outputs)
-
+    if cuda:
+        net_in = np_to_var(test_X[:,:,:,None])
+        net_in = net_in.cuda()
+        return var_to_np(model(net_in))
+    else:
+        return np.squeeze(np.array([var_to_np(model(np_to_var(X[None,:,:,None]))) for X in test_X]))
 
 def CSPLDA():
 
