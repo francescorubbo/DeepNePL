@@ -1,8 +1,8 @@
 from flask import render_template
 from flask import request
 from werkzeug.utils import secure_filename
-from deepnepl import app#, datafiles
-from deepnepl.models import shallowCNN, CSPLDA
+from deepnepl import app
+from deepnepl.models import CSPLDA,shallowCNN
 import deepnepl.plotting as plotting
 
 @app.route('/')
@@ -26,14 +26,15 @@ def upload_file(mode,filename):
         f.save('deepnepl/static/data/uploads/'+secure_filename(filename))
         print('file uploaded successfully')
     return render_template(mode+".html")
-                                   
+
 @app.route('/output')
 def output():
-       output = shallowCNN()
-       print(CSPLDA())
-       the_result = plotting.accuracy(output)
-       plotting.roc(output)
-       return render_template("output_testing.html", the_result = the_result)
+    outputCSP = CSPLDA()
+    outputCNN = shallowCNN()
+    the_result = plotting.accuracy([outputCNN,outputCSP])
+    plotting.roc([outputCNN,outputCSP])
+    plotting.plotaccuracy([outputCNN,outputCSP])
+    return render_template("output_testing.html", the_result = the_result)
 
 @app.route('/retrain')
 def retrain():

@@ -1,10 +1,27 @@
-import torch
 import numpy as np
-from braindecode.torch_ext.util import np_to_var, var_to_np
 from sklearn.pipeline import Pipeline
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from mne.decoding import CSP
-import sklearn
+
+def CSPLDA():
+    
+    test_X = np.load('deepnepl/static/data/uploads/test_X.npy')
+
+    X = np.load('deepnepl/static/data/models/trainCSP_X.npy')
+    y = np.load('deepnepl/static/data/models/trainCSP_y.npy')
+    
+    lda = LinearDiscriminantAnalysis()
+    csp = CSP(n_components=3, reg=None, log=True, norm_trace=False)
+    
+    # Use scikit-learn Pipeline with cross_val_score function
+    clf = Pipeline([('CSP', csp), ('LDA', lda)])
+    clf.fit(X,y)
+
+    return clf.predict_proba(test_X)
+
+import torch
+import numpy as np
+from braindecode.torch_ext.util import np_to_var, var_to_np
 
 def shallowCNN():
 
@@ -23,20 +40,6 @@ def shallowCNN():
     else:
         return np.squeeze(np.array([var_to_np(model(np_to_var(X[None,:,:,None]))) for X in test_X]))
 
-def CSPLDA():
-
-    train_X = np.load('deepnepl/static/data/models/trainCSP_X.npy')
-    train_y = np.load('deepnepl/static/data/models/trainCSP_y.npy')
-    test_X = np.load('deepnepl/static/data/uploads/test_X.npy')
-    lda = LinearDiscriminantAnalysis()
-    csp = CSP(n_components=3, reg=None, log=True, norm_trace=False)
-    clf = Pipeline([('CSP', csp), ('LDA', lda)])
-    print (sklearn.__version__)
-    print(train_X.shape, train_X.mean())
-#    clf.fit(train_X,train_y)
-
-    return 'ok'
-#    return clf.predict_proba(test_X)
     
 #def retrain(num_classes):
 #
