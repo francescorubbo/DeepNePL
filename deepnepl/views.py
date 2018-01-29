@@ -2,8 +2,9 @@ from flask import render_template
 from flask import request
 from werkzeug.utils import secure_filename
 from deepnepl import app
-from deepnepl.models import CSPLDA,shallowCNN
+from deepnepl.models import CSPLDA,shallowCNN,deepCNN,deepEEGNet
 import deepnepl.plotting as plotting
+import numpy as np
 
 @app.route('/')
 @app.route('/index')
@@ -29,12 +30,25 @@ def upload_file(mode,filename):
 
 @app.route('/output')
 def output():
-    outputCSP = CSPLDA()
-    outputCNN = shallowCNN()
-    the_result = plotting.accuracy([outputCNN,outputCSP])
-    plotting.roc([outputCNN,outputCSP])
-    plotting.plotaccuracy([outputCNN,outputCSP])
-    return render_template("output_testing.html", the_result = the_result)
+    #outputCSP = CSPLDA()
+    outputs = [shallowCNN(),deepCNN(),deepEEGNet()]
+    labels = ['Model A','Model B','Model C']
+    accuracies = plotting.accuracy(outputs)
+    acc_dict = dict(zip(labels,accuracies))
+    #    plotting.roc(outputs)
+    plotting.plotaccuracy(outputs,labels)
+
+    bestmodel = labels[np.argmax(accuracies)]
+    recommendModel = '%s is the best performing for this patient.'%bestmodel
+    warnQuality = 'All models underperform for this patience. Verify quality of EEG recordings.'
+    recommendation = recommendModel if acc_dict[bestmodel]>65 else warnQuality
+
+    return render_template("output_testing.html",
+                           modelA = acc_dict['Model A'],
+                           modelB = acc_dict['Model B'],
+                           modelC = acc_dict['Model C'],
+                           recommendation = recommendation
+    )
 
 @app.route('/retrain')
 def retrain():

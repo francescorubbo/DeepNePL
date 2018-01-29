@@ -16,7 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/starter-template.css') }}" rel="stylesheet">
-
+    
   </head>
 
   <body>
@@ -82,13 +82,24 @@
 
     <div class="container">
       <div class="starter-template">
-	<h3>Another Result:</h3>
-	<p class="lead">Now we've taken the input and called a function from your package.<br>The result is {{the_result}}</p>
+	<h3>Results:</h3>
+	<p class="lead">Task classification accuracies for each model
+	  <br>Model A: {{modelA}}%</br>
+	  <br>Model B: {{modelB}}%</br>
+	  <br>Model C: {{modelC}}%</p>
       </div>
     </div>
-
+    
     <div class="container">
-    <img src="{{ url_for('static', filename='data/plots/roc.jpg') }}">
+      <div class="starter-template">
+	<h3>Recommendation:</h3>
+	<p class="lead">{{recommendation}}</p>
+      </div>
+    </div>
+    
+    <div class="container">
+<!--    <img src="{{ url_for('static', filename='data/plots/roc.jpg') }}">
+-->
     <img src="{{ url_for('static', filename='data/plots/accuracy.jpg') }}">
     </div>
       

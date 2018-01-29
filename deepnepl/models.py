@@ -29,16 +29,74 @@ def shallowCNN():
 
     test_X = np.load('deepnepl/static/data/uploads/test_X.npy')
 
-    model = torch.load('deepnepl/static/data/models/shallowCNN.pth', map_location=lambda storage, loc: storage)
+    model = torch.load('deepnepl/static/data/models/shallowCNN.pth',
+                       map_location=lambda storage, loc: storage)
     if cuda:
         model.cuda()
+    model.eval()
 
     if cuda:
         net_in = np_to_var(test_X[:,:,:,None])
         net_in = net_in.cuda()
         return var_to_np(model(net_in))
     else:
-        return np.squeeze(np.array([var_to_np(model(np_to_var(X[None,:,:,None]))) for X in test_X]))
+        return np.squeeze(np.array([var_to_np(model(np_to_var(X[None,:,:,None])))
+                                    for X in test_X]))
+
+from braindecode.models.deep4 import Deep4Net
+    
+def deepCNN():
+
+    cuda = torch.cuda.is_available()
+
+    test_X = np.load('deepnepl/static/data/uploads/test_X.npy')
+    
+    n_classes = 2
+    in_chans = test_X.shape[1]
+    model = Deep4Net(in_chans=in_chans, n_classes=n_classes,
+                     input_time_length=test_X.shape[2],
+                     final_conv_length='auto').create_network()
+    model.load_state_dict(torch.load('deepnepl/static/data/models/modelDeepCNN.pth',
+                                     map_location=lambda storage, loc: storage))
+    if cuda:
+        model.cuda()
+    model.eval()
+
+    if cuda:
+        net_in = np_to_var(test_X[:,:,:,None])
+        net_in = net_in.cuda()
+        return var_to_np(model(net_in))
+    else:
+        return np.squeeze(np.array([var_to_np(model(np_to_var(X[None,:,:,None])))
+                                    for X in test_X]))
+
+from braindecode.models.eegnet import EEGNet
+    
+def deepEEGNet():
+
+    cuda = torch.cuda.is_available()
+
+    test_X = np.load('deepnepl/static/data/uploads/test_X.npy')
+
+    n_classes = 2
+    in_chans = test_X.shape[1]
+    model = EEGNet(in_chans=in_chans, n_classes=n_classes,
+                   input_time_length=test_X.shape[2],
+                   final_conv_length='auto').create_network()
+    model.load_state_dict(torch.load('deepnepl/static/data/models/modelEEGNet.pth',
+                                     map_location=lambda storage, loc: storage))
+
+    if cuda:
+        model.cuda()
+    model.eval()
+
+    if cuda:
+        net_in = np_to_var(test_X[:,:,:,None])
+        net_in = net_in.cuda()
+        return var_to_np(model(net_in))
+    else:
+        return np.squeeze(np.array([var_to_np(model(np_to_var(X[None,:,:,None])))
+                                    for X in test_X]))
 
     
 #def retrain(num_classes):
