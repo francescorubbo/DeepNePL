@@ -1,119 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
+
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>DeepNePl - Input</title>
+    <title>DeepNePl - Deep Learning Platform for Neuroprosthetics</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{{ url_for('static', filename='css/starter-template.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/modern-business.css') }}" rel="stylesheet">
+
   </head>
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-	<div class="navbar-header">
-	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-	    <span class="sr-only">Toggle navigation</span>
-	    <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-	  </button>
-	  <a class="navbar-brand" href="#">DeepNePl</a>
-	</div>
-	<div id="navbar" class="collapse navbar-collapse">
-	  <ul class="nav navbar-nav">
-	    <li class="active"><a href="#">Home</a></li>
-	    <li><a href="{{ url_for('retraining') }}"> Retraining </a></li>
-	    <li><a href="{{ url_for('testing') }}"> Testing </a></li>
-	    <li><a href="#about">About</a></li>
-	    <li><a href="#contact">Contact</a></li>	    
+	<a class="navbar-brand" href="index.html">DeepNePl</a>
+	<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle \
+																								    navigation">
+	  <span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarResponsive">
+	  <ul class="navbar-nav ml-auto">
+	    <li class="nav-item">
+	      <a class="nav-link" href="about.html">About</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="/testing">Testing</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="diagnostics.html">Diagnostics</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="retraining.html">Retraining</a>
+	    </li>
 	  </ul>
-	</div><!--/.nav-collapse -->
+	</div>
       </div>
     </nav>
 
 
+    <!-- Page Content -->
     <div class="container">
-      
-      <div class="starter-template">
-	<h2>Input page</h2>
-	<p>Upload user input</p>
-      </div>
 
+      <h1 class="my-4">Testing - Results</h1>
+
+      <div class="row">
+	<div class="col-lg-4 mb-4">
+	  <div class="card h-100">
+	    <h4 class="card-header">Accuracies</h4>
+	    <div class="card-body">
+	      <p class="card-text">The selected models yield these accuracies score.</p>
+	      <li>Model A: {{modelA}}%</li>
+	      <li>Model B: {{modelB}}%</li>
+	      <li>Model C: {{modelC}}%</li>	      
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="col-lg-4 mb-4">
+	  <div class="card h-100">
+	    <h4 class="card-header">Recommendation</h4>
+	    <div class="card-body">
+	      <p class="card-text">{{recommendation}}</p>
+	    </div>
+	  </div>
+	  <div class="card-footer">
+	    <a href="#" class="btn btn-primary">Download model</a>
+	  </div>
+	</div>	
+      </div>
     </div>
 
-    <div class = "container">
-      
-      <form action = "http://localhost:5000/uploader/testing/test_X.npy" method = "POST"
-	    enctype = "multipart/form-data" id="testdata">
-	Testing data: <input type = "file" name = "file" />
-	<input type = "submit"/>
-      </form>
-      
-    </div>
-    
-    <div class = "container">
-      
-      <form action = "http://localhost:5000/uploader/testing/test_y.npy" method = "POST"
-	    enctype = "multipart/form-data" id="testdata">
-	Testing data: <input type = "file" name = "file" />
-	<input type = "submit"/>
-      </form>
-      
-    </div>
-    
-    <form action="/output">
-      <div>
-	<button type="submit" class="btn btn-default btn-lg">Evaluate!</button>
-      </div>
-    </form>
 
-    <div class="container">
-      <div class="starter-template">
-	<h3>Results:</h3>
-	<p class="lead">Task classification accuracies for each model
-	  <br>Model A: {{modelA}}%</br>
-	  <br>Model B: {{modelB}}%</br>
-	  <br>Model C: {{modelC}}%</p>
-      </div>
-    </div>
+    
     
     <div class="container">
-      <div class="starter-template">
-	<h3>Recommendation:</h3>
-	<p class="lead">{{recommendation}}</p>
-      </div>
-    </div>
-    
-    <div class="container">
-<!--    <img src="{{ url_for('static', filename='data/plots/roc.jpg') }}">
--->
     <img src="{{ url_for('static', filename='data/plots/accuracy.jpg') }}">
     </div>
-      
-    <div class="container">
-    
-      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-      <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-      
-    </div> <!-- /.container-->
-    
-    <!-- Bootstrap core JavaScript
-	 ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+          
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>   
+
   </body>
 </html>
