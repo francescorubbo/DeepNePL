@@ -55,4 +55,10 @@ def output():
 
 @app.route('/retrain')
 def retrain():
-       return render_template("input.html")
+    return render_template("input.html")
+
+
+@app.route('/404')
+def to404():
+    return render_template("404.html")
+   

@@ -47,53 +47,37 @@
       </div>
     </nav>
 
-
     <!-- Page Content -->
     <div class="container">
 
-      <h1 class="my-4">Testing - Results</h1>
+      <!-- Page Heading/Breadcrumbs -->
+      <h1 class="mt-4 mb-3">404
+        <small>Page Not Found</small>
+      </h1>
 
-      <div class="row">
-	<div class="col-lg-4 mb-4">
-	  <div class="card h-100">
-	    <h4 class="card-header">Accuracies</h4>
-	    <div class="card-body">
-	      <p class="card-text">The selected models yield these accuracy scores:</p>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li class="breadcrumb-item active">404</li>
+      </ol>
 
-	      {% for model,accuracy in acc_models.items() %}
-	      <li>{{model}}: {{accuracy}}%</li>
-	      {% endfor %}
-	    </div>
-	  </div>
-	</div>
-	<div class="col-lg-4 mb-4">
-	  <img src="{{ url_for('static', filename='data/plots/accuracy.jpg') }}">  
-	</div>
+      <div class="jumbotron">
+        <h1 class="display-1">404</h1>
+        <p>The page you're looking for is not yet available...come back later!</p>
       </div>
+      <!-- /.jumbotron -->
 
-      <div class="row">
-	<div class="col-lg-4 mb-4">
-	  <div class="card h-100">
-	    <h4 class="card-header">Recommendation</h4>
-	    <div class="card-body">
-	      <p class="card-text">{{recommendation}}</p>
-	    </div>
-	  </div>
-	  <div class="card-footer">
-	    <a href="{{bestmodelpath}}" class="btn btn-primary" download="model.pth">Download model</a>
-	  </div>
-	</div>	
-      </div>
     </div>
+    <!-- /.container -->
 
-<!--    
-    <div class="container">
-    <img src="{{ url_for('static', filename='data/plots/accuracy.jpg') }}">
-    </div>
--->   
-       
+
+    <!-- Bootstrap core JavaScript
+	 ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>   
-
+    
   </body>
 </html>
