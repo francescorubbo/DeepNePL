@@ -54,35 +54,32 @@
       
       <div class="row">
 
-	<div class="col-lg-4 mb-4">
-	  <div class="card h-100">
-	    <h4 class="card-header">Test dataset</h4>
-	    <div class="card-body">
-	      <p class="card-text">Upload test dataset.</p>
-	      
-	      <form action = "/uploader/testing/test_X.npy" method = "POST"
-		    enctype = "multipart/form-data" id="testdata">
-		<div class="custom-file">
-		  Data: <input type = "file" class="custom-file-input" id="customFile" name = "file" />
-		  <label class="custom-file-label" for="customFile">Choose file</label>
-		</div>
-		<input type = "submit"/>
-	      </form>
-	      <form action = "/uploader/testing/test_y.npy" method = "POST"
-		    enctype = "multipart/form-data" id="testdata">
-		<div class="custom-file">		    
-		  Labels: <input type = "file" class="custom-file-input" id="customFile" name = "file" />
-		  <label class="custom-file-label" for="customFile">Choose file</label>
-		</div>
-		<input type = "submit"/>
-	      </form>
-	      
+	<div class="col-lg-5 mb-4">
+	  
+	  <form class="form-inline" action="/uploader/testing/test_X.npy" method="POST"
+		enctype="multipart/form-data" id="testdata">
+	    <div class="input-group mb-2 mr-sm-2">
+	      <input type="file" class="custom-file-input" id="dataFile" name="file"/>
+	      <label class="custom-file-label" for="dataFile" id="datafilename">Data file [.npy]</label>
 	    </div>
-	  </div>
-	</div>
+	    <button type="submit" class="btn btn-primary mb-2">Upload</button>
+	  </form>
 
 	</div>
+	
+	<div class="col-lg-5 mb-4">
+	  <form class="form-inline" action="/uploader/testing/test_y.npy" method="POST"
+		enctype="multipart/form-data" id="testdata">
+	    <div class="input-group mb-2 mr-sm-2">
+	      <input type="file" class="custom-file-input" id="labelFile" name="file"/>
+	      <label class="custom-file-label" for="labelFile" id="labelfilename">Label file [.npy]</label>
+	    </div>
+	    <button type="submit" class="btn btn-primary mb-2">Upload</button>
+	  </form>
+	</div>
 
+      </div>
+      
 
       <form method="get" action="/output">
 
@@ -120,40 +117,26 @@
 		
 	      </div>
 	      
-	      
 	    </div>
 	  </div>
-	  <div class="col-lg-4 mb-4">
+	  <div class="col-lg-5 mb-4">
 	    <div class="card h-100">
 	      <h4 class="card-header">Classification task</h4>
 	      <div class="card-body">
-		<p class="card-text">Select the classification task the model has been pretrained for</p>
-		<div class="form-check">
-		  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked>
-		  <label class="form-check-label" for="defaultCheck2">
-		    Imagined hands vs feet movement
-		  </label>
-		</div>
+		<p class="card-text">Select the classification task for which the models have been pretrained.</p>
+		<select class="selectpicker">
+		  <option>Imagine opening and closing left or right fist</option>
+		</select>		
 	      </div>
 	    </div>
 	  </div>
 
 	  <div class="col-lg-4 mb-4">
-	    <input  type="submit">
+	    <button type="submit" class="btn btn-primary mb-2">Evaluate</button>
 	  </div>
 
 	</div>
-      </form>
-	
-	<!-- Call to Action Section -->
-<!--	<div class="row mb-4">
-	  <div class="col-md-4">
-	    <input  type="submit">
-	  </div>
-	</div>
-      </form>
--->
-	
+      </form>	
       
       <!-- Bootstrap core JavaScript
 	 ================================================== -->
@@ -161,6 +144,28 @@
       
       <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
       <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-	
+
+      <script>
+	$('#dataFile').change(function() {
+	var filename = $(this).val();
+	var lastIndex = filename.lastIndexOf("\\");
+	if (lastIndex >= 0) {
+	filename = filename.substring(lastIndex + 1);
+	}
+	$('#datafilename').html(filename);
+	});
+      </script>
+
+      <script>
+	$('#labelFile').change(function() {
+	var filename = $(this).val();
+	var lastIndex = filename.lastIndexOf("\\");
+	if (lastIndex >= 0) {
+	filename = filename.substring(lastIndex + 1);
+	}
+	$('#labelfilename').html(filename);
+	});
+      </script>
+
   </body>
 </html>
