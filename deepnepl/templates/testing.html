@@ -53,81 +53,114 @@
       <h1 class="my-4">Testing</h1>
       
       <div class="row">
-	<div class="col-lg-4 mb-4">
-	  <div class="card h-100">
-	    <h4 class="card-header">Models</h4>
-	    <div class="card-body">
-	      <p class="card-text">Select models to include.</p>
-	      <div class="form-check">
-		<input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked>
-		<label class="form-check-label" for="defaultCheck1">
-		  Model A - 2D CNN
-		</label>
-	      </div>
-	      <div class="form-check">
-		<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked>
-		<label class="form-check-label" for="defaultCheck2">
-		  Model B - 1D CNN
-		</label>
-	      </div>
-	      <div class="form-check">
-		<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked>
-		<label class="form-check-label" for="defaultCheck2">
-		  Model C - deepCNN
-		</label>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+
 	<div class="col-lg-4 mb-4">
 	  <div class="card h-100">
 	    <h4 class="card-header">Test dataset</h4>
 	    <div class="card-body">
 	      <p class="card-text">Upload test dataset.</p>
-
+	      
 	      <form action = "/uploader/testing/test_X.npy" method = "POST"
 		    enctype = "multipart/form-data" id="testdata">
-		Testing data: <input type = "file" name = "file" />
+		<div class="custom-file">
+		  Data: <input type = "file" class="custom-file-input" id="customFile" name = "file" />
+		  <label class="custom-file-label" for="customFile">Choose file</label>
+		</div>
 		<input type = "submit"/>
 	      </form>
 	      <form action = "/uploader/testing/test_y.npy" method = "POST"
 		    enctype = "multipart/form-data" id="testdata">
-		Testing labels: <input type = "file" name = "file" />
+		<div class="custom-file">		    
+		  Labels: <input type = "file" class="custom-file-input" id="customFile" name = "file" />
+		  <label class="custom-file-label" for="customFile">Choose file</label>
+		</div>
 		<input type = "submit"/>
 	      </form>
 	      
 	    </div>
 	  </div>
 	</div>
-	<div class="col-lg-4 mb-4">
-	  <div class="card h-100">
-	    <h4 class="card-header">Classification task</h4>
-	    <div class="card-body">
-	      <p class="card-text">Select the classification task the model has been pretrained for</p>
-	      <div class="form-check">
-		<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked>
-		<label class="form-check-label" for="defaultCheck2">
-		  Imagined hands vs feet movement
-		</label>
+
+	</div>
+
+
+      <form method="get" action="/output">
+
+      <div class="row">
+	  
+	  <div class="col-lg-4 mb-4">
+	    <div class="card h-100">
+	      <h4 class="card-header">Models</h4>
+	      <div class="card-body">
+		<p class="card-text">Select models to include.</p>
+		
+		<div class="form-check">
+		  <input class="form-check-input" type="checkbox" value="Model A"
+			 name="models" id="Model A">
+		  <label class="form-check-label" for="Model A">
+		    Model A - 2D CNN
+		  </label>
+		</div>
+		
+		<div class="form-check">
+		  <input class="form-check-input" type="checkbox" value="Model B"
+			 name="models" id="Model B" checked>
+		  <label class="form-check-label" for="Model B">
+		    Model B - 1D CNN
+		  </label>
+		</div>
+		
+		<div class="form-check">
+		  <input class="form-check-input" type="checkbox" value="Model C"
+			 name="models" id="Model C" checked>
+		  <label class="form-check-label" for="Model C">
+		    Model C - deepCNN
+		  </label>
+		</div>
+		
+	      </div>
+	      
+	      
+	    </div>
+	  </div>
+	  <div class="col-lg-4 mb-4">
+	    <div class="card h-100">
+	      <h4 class="card-header">Classification task</h4>
+	      <div class="card-body">
+		<p class="card-text">Select the classification task the model has been pretrained for</p>
+		<div class="form-check">
+		  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" checked>
+		  <label class="form-check-label" for="defaultCheck2">
+		    Imagined hands vs feet movement
+		  </label>
+		</div>
 	      </div>
 	    </div>
 	  </div>
-	</div>
-      </div>
 
-      <!-- Call to Action Section -->
-      <div class="row mb-4">
-	<div class="col-md-4">
-	  <a class="btn btn-lg btn-secondary btn-block" href="/output">Evaluate</a>
+	  <div class="col-lg-4 mb-4">
+	    <input  type="submit">
+	  </div>
+
 	</div>
-      </div>
+      </form>
+	
+	<!-- Call to Action Section -->
+<!--	<div class="row mb-4">
+	  <div class="col-md-4">
+	    <input  type="submit">
+	  </div>
+	</div>
+      </form>
+-->
+	
       
-    <!-- Bootstrap core JavaScript
+      <!-- Bootstrap core JavaScript
 	 ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-
-    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>   
-    
+      <!-- Placed at the end of the document so the pages load faster -->
+      
+      <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+	
   </body>
 </html>
