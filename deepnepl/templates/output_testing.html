@@ -59,9 +59,10 @@
 	    <h4 class="card-header">Accuracies</h4>
 	    <div class="card-body">
 	      <p class="card-text">The selected models yield these accuracies score.</p>
-	      <li>Model A: {{modelA}}%</li>
-	      <li>Model B: {{modelB}}%</li>
-	      <li>Model C: {{modelC}}%</li>	      
+
+	      {% for model,accuracy in acc_models.items() %}
+	      <li>{{model}}: {{accuracy}}%</li>
+	      {% endfor %}
 	    </div>
 	  </div>
 	</div>
