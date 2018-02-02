@@ -28,25 +28,24 @@ def upload_file(mode,filename):
         print('file uploaded successfully')
     return render_template(mode+".html")
 
-@app.route('/output')
+@app.route('/output',methods=['GET'])
 def output():
-    #outputCSP = CSPLDA()
+    models = {'Model A':deepEEGNet,'Model B':shallowCNN,'Model C':deepCNN}
+
+    labels = request.args.getlist('models')
     outputs = [shallowCNN(),deepCNN(),deepEEGNet()]
-    labels = ['Model A','Model B','Model C']
+    outputs = [models[label]() for label in labels]
     accuracies = plotting.accuracy(outputs)
     acc_dict = dict(zip(labels,accuracies))
-    #    plotting.roc(outputs)
     plotting.plotaccuracy(outputs,labels)
 
     bestmodel = labels[np.argmax(accuracies)]
     recommendModel = '%s is the best performing for this patient.'%bestmodel
-    warnQuality = 'All models underperform for this patience. Verify quality of EEG recordings.'
+    warnQuality = 'All models underperform for this patient. Verify quality of EEG recordings.'
     recommendation = recommendModel if acc_dict[bestmodel]>65 else warnQuality
 
     return render_template("output_testing.html",
-                           modelA = acc_dict['Model A'],
-                           modelB = acc_dict['Model B'],
-                           modelC = acc_dict['Model C'],
+                           acc_models = acc_dict,
                            recommendation = recommendation
     )
 
