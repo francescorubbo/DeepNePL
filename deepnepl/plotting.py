@@ -4,6 +4,9 @@ matplotlib.use('agg')
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc
 import numpy as np
+import time
+import os
+import glob
 
 def roc(outputs):
     y = np.load('deepnepl/static/data/uploads/test_y.npy')
@@ -54,5 +57,9 @@ def plotaccuracy(outputs,labels):
     plt.ylim([0,100])
     plt.grid(True)
     plt.legend(loc='lower left')
-    plt.savefig('deepnepl/static/data/plots/accuracy.jpg')
+    for f in glob.glob('deepnepl/static/data/plots/*'):
+        os.remove(f)
+    filename = 'accuracy.jpg'+str(time.time())
+    plt.savefig('deepnepl/static/data/plots/'+filename,format='jpg')
     plt.clf()
+    return filename

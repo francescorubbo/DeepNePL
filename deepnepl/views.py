@@ -40,7 +40,7 @@ def output():
     outputs = [models[label]() for label in labels]
     accuracies = plotting.accuracy(outputs)
     acc_dict = dict(zip(labels,accuracies))
-    plotting.plotaccuracy(outputs,labels)
+    filename = plotting.plotaccuracy(outputs,labels)
 
     bestmodel = labels[np.argmax(accuracies)]
     recommendModel = '%s is the best performing for this patient.'%bestmodel
@@ -50,7 +50,10 @@ def output():
     return render_template("output_testing.html",
                            acc_models = acc_dict,
                            recommendation = recommendation,
-                           bestmodelpath = url_for('static',filename='data/models/'+modelfiles[bestmodel])
+                           bestmodelpath = url_for('static',
+                                                   filename='data/models/'+modelfiles[bestmodel]),
+                           plotfilename = url_for('static',
+                                              filename='data/plots/'+filename)
     )
 
 @app.route('/retrain')
