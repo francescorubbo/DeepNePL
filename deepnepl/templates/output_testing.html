@@ -58,7 +58,7 @@
 	  <div class="card h-100">
 	    <h4 class="card-header">Accuracies</h4>
 	    <div class="card-body">
-	      <p class="card-text">The selected models yield these accuracies score.</p>
+	      <p class="card-text">The selected models yield these accuracy scores:</p>
 
 	      {% for model,accuracy in acc_models.items() %}
 	      <li>{{model}}: {{accuracy}}%</li>
@@ -66,7 +66,12 @@
 	    </div>
 	  </div>
 	</div>
-	
+	<div class="col-lg-4 mb-4">
+	  <img src="{{ url_for('static', filename='data/plots/accuracy.jpg') }}">  
+	</div>
+      </div>
+
+      <div class="row">
 	<div class="col-lg-4 mb-4">
 	  <div class="card h-100">
 	    <h4 class="card-header">Recommendation</h4>
@@ -81,13 +86,12 @@
       </div>
     </div>
 
-
-    
-    
+<!--    
     <div class="container">
     <img src="{{ url_for('static', filename='data/plots/accuracy.jpg') }}">
     </div>
-          
+-->   
+       
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>   
 

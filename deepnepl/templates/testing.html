@@ -53,36 +53,41 @@
       <h1 class="my-4">Testing</h1>
       
       <div class="row">
-
-	<div class="col-lg-5 mb-4">
-	  
-	  <form class="form-inline" action="/uploader/testing/test_X.npy" method="POST"
-		enctype="multipart/form-data" id="testdata">
-	    <div class="input-group mb-2 mr-sm-2">
-	      <input type="file" class="custom-file-input" id="dataFile" name="file"/>
-	      <label class="custom-file-label" for="dataFile" id="datafilename">Data file [.npy]</label>
-	    </div>
-	    <button type="submit" class="btn btn-primary mb-2">Upload</button>
-	  </form>
-
+	<div class="col-lg-9 mb-4">
+	  <div class="card h-100">
+	  <h4 class="card-header">Test Dataset</h4>
+	  <div class="card-body">
+	    
+<!--	    <div class="col-lg-5 mb-4"> -->
+	      <form class="form-inline" action="/uploader/testing/test_X.npy" method="POST"
+		    enctype="multipart/form-data" id="testdata">
+		<div class="input-group mb-2 mr-sm-2">
+		  <input type="file" class="custom-file-input" id="dataFile" name="file"/>
+		  <label class="custom-file-label" for="dataFile" id="datafilename">Data file [.npy]</label>
+		</div>
+		<button type="submit" class="btn btn-primary mb-2">Upload</button>
+	      </form>  
+<!--	    </div> -->
+	    
+<!--	    <div class="col-lg-5 mb-4"> -->
+	      <form class="form-inline" action="/uploader/testing/test_y.npy" method="POST"
+		    enctype="multipart/form-data" id="testdata">
+		<div class="input-group mb-2 mr-sm-2">
+		  <input type="file" class="custom-file-input" id="labelFile" name="file"/>
+		  <label class="custom-file-label" for="labelFile" id="labelfilename">Label file [.npy]</label>
+		</div>
+		<button type="submit" class="btn btn-primary mb-2">Upload</button>
+	      </form>
+<!--	    </div> -->
+	    
+	  </div>
+	  </div>
 	</div>
-	
-	<div class="col-lg-5 mb-4">
-	  <form class="form-inline" action="/uploader/testing/test_y.npy" method="POST"
-		enctype="multipart/form-data" id="testdata">
-	    <div class="input-group mb-2 mr-sm-2">
-	      <input type="file" class="custom-file-input" id="labelFile" name="file"/>
-	      <label class="custom-file-label" for="labelFile" id="labelfilename">Label file [.npy]</label>
-	    </div>
-	    <button type="submit" class="btn btn-primary mb-2">Upload</button>
-	  </form>
-	</div>
-
       </div>
       
 
       <form method="get" action="/output">
-
+	
       <div class="row">
 	  
 	  <div class="col-lg-4 mb-4">
@@ -93,7 +98,7 @@
 		
 		<div class="form-check">
 		  <input class="form-check-input" type="checkbox" value="Model A"
-			 name="models" id="Model A">
+			 name="models" id="Model A" checked>
 		  <label class="form-check-label" for="Model A">
 		    Model A - 2D CNN
 		  </label>

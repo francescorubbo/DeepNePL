@@ -1,3 +1,4 @@
+from cycler import cycler
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
@@ -39,12 +40,14 @@ def plotaccuracy(outputs,labels):
     x = list(range(len(accuracies)))
     plt.errorbar(x,accuracies,errors,fmt='o')
 
-    medianacc = 0.78*100
-    lowacc = 0.64*100
-    highacc = 0.86*100
+    medianaccs = {'Model A': 72, 'Model B': 77.9, 'Model C': 79.4}
+    prop_cycle = plt.rcParams['axes.prop_cycle']
+    colors = prop_cycle.by_key()['color']
+    linestyles = ['-','--','-.','.']
+    for label,col,ls in zip(labels,colors,linestyles):
+        plt.axhline(medianaccs[label],color=col,linestyle=ls,label=label+' median')
     plt.axhline(50,color='gray',linestyle='--',label='Chance')
-    plt.fill_between([x[0]-0.5,x[-1]+0.5],[lowacc]*2,[highacc]*2,alpha=0.3,label='Model A IQR')
-    plt.axhline(medianacc,color='r',label='Model A median')
+    #    plt.fill_between([x[0]-0.5,x[-1]+0.5],[lowacc]*2,[highacc]*2,alpha=0.3,label='Model A IQR')
     plt.xticks(x, labels)
     plt.ylabel('Accuracy [%]')
     plt.xlim([x[0]-0.5,x[-1]+0.5])
