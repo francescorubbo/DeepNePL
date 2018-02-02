@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template,url_for
 from flask import request
 from werkzeug.utils import secure_filename
 from deepnepl import app
@@ -31,6 +31,9 @@ def upload_file(mode,filename):
 @app.route('/output',methods=['GET'])
 def output():
     models = {'Model A':deepEEGNet,'Model B':shallowCNN,'Model C':deepCNN}
+    modelfiles={'Model A': 'modelEEGNet.pth',
+                'Model B': 'shallowCNN.pth',
+                'Model C': 'modelDeepCNN.pth'} 
 
     labels = request.args.getlist('models')
     outputs = [shallowCNN(),deepCNN(),deepEEGNet()]
@@ -46,7 +49,8 @@ def output():
 
     return render_template("output_testing.html",
                            acc_models = acc_dict,
-                           recommendation = recommendation
+                           recommendation = recommendation,
+                           bestmodelpath = url_for('static',filename='data/models/'+modelfiles[bestmodel])
     )
 
 @app.route('/retrain')
