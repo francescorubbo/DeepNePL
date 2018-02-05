@@ -68,6 +68,9 @@ def plotaccuracy(outputs,labels):
 
 
 def plotdiagnostics(numRows=4):
+    for f in glob.glob('deepnepl/static/data/plots/*'):
+        os.remove(f)
+        
     X = np.load('deepnepl/static/data/uploads/test_X.npy')
     X = X[0:2]
 
