@@ -39,9 +39,10 @@
 	    <li class="nav-item">
 	      <a class="nav-link" href="/diagnostics">Diagnostics</a>
 	    </li>
-	    <!-- <li class="nav-item"> -->
-	    <!--   <a class="nav-link" href="/404">Retraining</a> -->
-	    <!-- </li> -->
+<!--	    <li class="nav-item">
+	      <a class="nav-link" href="/404">Retraining</a>
+	    </li>
+-->
 	  </ul>
 	</div>
       </div>
@@ -51,46 +52,14 @@
     <!-- Page Content -->
     <div class="container">
 
-      <h1 class="my-4">Testing - Results</h1>
+      <h1 class="my-4">Diagnostics</h1>
 
-      <div class="row">
-	<div class="col-lg-4 mb-4">
-	  <div class="card h-100">
-	    <h4 class="card-header">Accuracies</h4>
-	    <div class="card-body">
-	      <p class="card-text">The selected models yield these accuracy scores:</p>
 
-	      {% for model,accuracy in acc_models.items() %}
-	      <li>{{model}}: {{accuracy}}%</li>
-	      {% endfor %}
-	    </div>
-	  </div>
-	</div>
-	<div class="col-lg-4 mb-4">
-	  <img src="{{ plotfilename }}">  
-	</div>
-      </div>
-
-      <div class="row">
-	<div class="col-lg-4 mb-4">
-	  <div class="card h-100">
-	    <h4 class="card-header">Recommendation</h4>
-	    <div class="card-body">
-	      <p class="card-text">{{recommendation}}</p>
-	    </div>
-	  </div>
-	  <div class="card-footer">
-	    <a href="{{bestmodelpath}}" class="btn btn-primary" download="model.pth">Download model</a>
-	  </div>
-	</div>	
-      </div>
+      {% for filename in filenames %}
+      <h4 class="my-4">Record number {{loop.index}}</h4>
+      <img src="{{ url_for('static', filename='data/plots/'+filename) }}">
+      {% endfor %}
     </div>
-
-<!--    
-    <div class="container">
-    <img src="{{ url_for('static', filename='data/plots/accuracy.jpg') }}">
-    </div>
--->   
        
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>   

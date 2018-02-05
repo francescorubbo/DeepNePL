@@ -36,7 +36,6 @@ def output():
                 'Model C': 'modelDeepCNN.pth'} 
 
     labels = request.args.getlist('models')
-    outputs = [shallowCNN(),deepCNN(),deepEEGNet()]
     outputs = [models[label]() for label in labels]
     accuracies = plotting.accuracy(outputs)
     acc_dict = dict(zip(labels,accuracies))
@@ -65,3 +64,12 @@ def retrain():
 def to404():
     return render_template("404.html")
    
+
+@app.route('/diagnostics')
+def diagnostics():
+    filenames = plotting.plotdiagnostics()
+    return render_template('diagnostics.html', filenames = filenames)
+
+@app.route('/about')
+def about():
+    return render_template("about.html")

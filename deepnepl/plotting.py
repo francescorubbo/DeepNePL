@@ -7,6 +7,7 @@ import numpy as np
 import time
 import os
 import glob
+from matplotlib.collections import LineCollection
 
 def roc(outputs):
     y = np.load('deepnepl/static/data/uploads/test_y.npy')
@@ -62,4 +63,48 @@ def plotaccuracy(outputs,labels):
     filename = 'accuracy.jpg'+str(time.time())
     plt.savefig('deepnepl/static/data/plots/'+filename,format='jpg')
     plt.clf()
+    plt.close()
     return filename
+
+
+def plotdiagnostics(numRows=4):
+    X = np.load('deepnepl/static/data/uploads/test_X.npy')
+    X = X[0:2]
+
+    filenames = []
+    for ii,data in enumerate(X):
+        print('looping',ii)
+        fig, axarr = plt.subplots(4,4,sharex=True,figsize=(30,18))
+        dmin = data.min()
+        dmax = data.max()
+        dr = (dmax - dmin) * 0.7  # Crowd them a bit.
+        y0 = dmin
+        y1 = (numRows - 1) * dr + dmax *0.7
+        times = np.linspace(0.,3.1,497)
+
+        for xax,axs in enumerate(axarr):
+            for yax,ax in enumerate(axs):
+                ax.set_ylim(y0, y1)
+                segs = [np.hstack( (times[:, np.newaxis], data[i, :, np.newaxis]) )
+                        for i in range(4*numRows*xax+numRows*yax,4*numRows*xax+numRows*yax+numRows)]
+                ticklocs = [i * dr for i in range(numRows)]
+                offsets = np.zeros((numRows, 2), dtype=float)
+                offsets[:, 1] = np.array(ticklocs)
+                lines = LineCollection(segs, offsets=offsets, transOffset=None)
+                for off in offsets:
+                    ax.axhline(off[1],color='gray',linestyle='--')
+                ax.add_collection(lines)
+                
+                ax.set_yticks(ticklocs)
+                ax.set_yticklabels(
+                    range(4*numRows*xax+numRows*yax,4*numRows*xax+numRows*yax+numRows))
+                
+                ax.set_xlim([0,3.1])
+                
+        filename = 'diagnostics.jpg'+str(time.time())
+        plt.savefig('deepnepl/static/data/plots/'+filename,format='jpg')
+        plt.clf()
+        plt.close(fig)
+        filenames.append(filename)
+    
+    return filenames
