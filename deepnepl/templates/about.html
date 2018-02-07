@@ -63,7 +63,37 @@
 	</div>      
       </div>      
     </header>
-                
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <h1 class="my-4">Welcome to DeepNePl</h1>
+
+      <div class="row">
+	<div class="col-lg-9 mb-4">
+	  <div class="card h-100">
+	    <h4 class="card-header">Test Dataset</h4>
+	    <div class="card-body">
+	      DeepNePl is a web platform to evaluate the performance of deep learning models in classifying actions based on their electroencephalography signature. The data shape is (N,C,T), where N is the number of instances (i.e. labeled actions recorded), C is the number of channels (i.e. electrodes), and T is the number of time steps recorded for each action.
+
+	      Three convolutional neural networks (CNN), as implemented in
+	      <a href="https://robintibor.github.io/braindecode/">Braindecode</a>, are considered:
+	      <li>Model A: a 2D CNN where a first convolution of spatial (dimension C) filters is followed by two layers of two-dimensional (dimensions C and T) filters. Maxpooling and batch normalization is used between each convolution. Additional details can be found at <a href="https://arxiv.org/abs/1611.08024">arXiv:1611.08024</a>.</li>
+	      
+	      <li>Model B: a 1D CNN where a first convolution of time filters (dimension T)
+		is followed by a convolution of spatial filters (dimension C) and average pooling.
+		Additional details can be found at <a href="https://arxiv.org/abs/1703.05051">arXiv:1703.05051</a>.</li>
+	      <li>Model C: a deep CNN with four consecutive blocks of convolutions.
+		Each block consists of two-dimensional (dimensions C and T) filters, followed by batch normalization and maxpooling.
+		Additional details can be found at <a href="https://arxiv.org/abs/1703.05051">arXiv:1703.05051</a>.</li>
+	      
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+    
     <!-- Bootstrap core JavaScript
 	 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

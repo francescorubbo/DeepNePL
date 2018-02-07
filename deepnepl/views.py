@@ -36,10 +36,17 @@ def output():
                 'Model C': 'modelDeepCNN.pth'} 
 
     labels = request.args.getlist('models')
+    isExample = 'example' in request.args.getlist('example')
+    path = 'deepnepl/static/data/'
+    if isExample:
+        path += 'example/'
+    else:
+        path += 'uploads/'
+    
     outputs = [models[label]() for label in labels]
-    accuracies = plotting.accuracy(outputs)
+    accuracies = plotting.accuracy(outputs,path)
     acc_dict = dict(zip(labels,accuracies))
-    filename = plotting.plotaccuracy(outputs,labels)
+    filename = plotting.plotaccuracy(outputs,labels,path)
 
     bestmodel = labels[np.argmax(accuracies)]
     recommendModel = '%s is the best performing for this patient.'%bestmodel

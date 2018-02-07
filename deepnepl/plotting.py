@@ -9,8 +9,8 @@ import os
 import glob
 from matplotlib.collections import LineCollection
 
-def roc(outputs):
-    y = np.load('deepnepl/static/data/uploads/test_y.npy')
+def roc(outputs,path):
+    y = np.load(path+'test_y.npy')
     for output in outputs:
         pred = output[:,1]
         fpr,tpr,_ = roc_curve(y,pred)
@@ -23,8 +23,8 @@ def roc(outputs):
     plt.savefig('deepnepl/static/data/plots/roc.jpg')
     plt.clf()
 
-def accuracy(outputs):
-    y = np.load('deepnepl/static/data/uploads/test_y.npy')
+def accuracy(outputs,path):
+    y = np.load(path+'test_y.npy')
     accuracies = []
     for output in outputs:
         predicted_labels = np.argmax(output, axis=1)
@@ -32,8 +32,8 @@ def accuracy(outputs):
         accuracies.append( int(accuracy*100) )
     return accuracies
 
-def plotaccuracy(outputs,labels):
-    y = np.load('deepnepl/static/data/uploads/test_y.npy')
+def plotaccuracy(outputs,labels,path):
+    y = np.load(path+'test_y.npy')
     accuracies = []
     errors = []
     for output in outputs:
